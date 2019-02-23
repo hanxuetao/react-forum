@@ -3,10 +3,8 @@ const queryString = require('query-string')
 const baseUrl = ' https://cnodejs.org/api/v1'
 
 module.exports = function (req, res, next) {
-  // const path = req.path
-  // const paserQuery = req.query
   const paramUrl = req.url
-  // console.log(paramUrl)
+  console.log(paramUrl)
   const user = req.session.user || {}
   const needAccessToken = req.query.needAccessToken
 
@@ -25,7 +23,7 @@ module.exports = function (req, res, next) {
   axios({
     url: `${baseUrl}${paramUrl}`,
     method: req.method,
-    parms: query,
+    parms: req.query,
     //  {'accesstoken: xxxx'} 转化后 'accesstoken=xxx'
     data: queryString.stringify(Object.assign({}, req.body, {
       accesstoken: (needAccessToken && req.method === 'POST') ? user.accessToken : ''

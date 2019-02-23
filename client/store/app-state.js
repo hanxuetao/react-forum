@@ -22,21 +22,16 @@ export default class AppState {
     },
   }
 
-  init({ user }) {
-    if (user) {
-      this.user = user
-    }
-  }
-
   @action login(accessToken) {
     return new Promise((resolve, reject) => {
       post('user/login', {}, {
         accessToken,
       }).then((resp) => {
         if (resp.success) {
-          this.user.isLogin = true
           this.user.info = resp.data
-          resolve(resp)
+          this.user.isLogin = true
+          console.log(this.user.info.loginname)
+          resolve()
         } else {
           reject(resp)
         }
@@ -65,6 +60,7 @@ export default class AppState {
   }
 
   @action getUserCollection() {
+    console.log(this.user.info)
     this.user.collections.syncing = true
     return new Promise((resolve, reject) => {
       get(`topic_collect/${this.user.info.loginname}`)

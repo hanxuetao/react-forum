@@ -1,0 +1,22 @@
+{
+  "apps": [
+    {
+      "name": "hnode",
+      "script": "./server/server.js",
+      "env_production": {
+        "NODE_ENV": "production",
+        "HOST": "localhost"
+      }
+    }
+  ],
+  "deploy": {
+    "production": {
+      "user": "root",
+      "host": "reacthan.site",
+      "repo": "git@github.com:hanxuetao/react-forum.git",
+      "ref": "origin/master",
+      "path": "/root/deploy/hnode-master",
+      "post-deploy": "npm install && npm run build && pm2 startOrRestart ecosystem.json --env production"
+    }
+  }
+}
